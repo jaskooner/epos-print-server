@@ -51,7 +51,7 @@ public class SocketServer {
             try {
 
                 in = new DataInputStream(clientSocket.getInputStream());
-                out = new PrintWriter(clientSocket.getOutputStream());
+                out = new PrintWriter(clientSocket.getOutputStream(), true);
                 File tempFile = File.createTempFile("tempReceipt", null);
                 log.warning(tempFile.getAbsolutePath());
 
@@ -67,7 +67,6 @@ public class SocketServer {
                 PrintReceipt.printFile(tempFile);
                 tempFile.deleteOnExit();
 
-                out.println("200");
 
                 in.close();
                 out.close();

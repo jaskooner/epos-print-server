@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AppTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-08-29T09:18:23" hostname="Jaskooners-MBP.lan" time="0.033">
+  <properties/>
+  <testcase name="givenClient1_whenServerResponds_thenCorrect" classname="AppTest" time="0.029"/>
+  <testcase name="given2Clients_whenServerResponds_thenCorrect" classname="AppTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Aug 29, 2019 10:18:23 AM com.scooter.printserver.SocketClient <init>
+INFO: socketclient init
+Aug 29, 2019 10:18:23 AM com.scooter.printserver.SocketClient <init>
+INFO: socketclient init
+Aug 29, 2019 10:18:23 AM com.scooter.printserver.SocketClient <init>
+INFO: socketclient init
+Aug 29, 2019 10:18:23 AM com.scooter.printserver.SocketClient <init>
+INFO: socketclient init
+]]></system-err>
+</testsuite>

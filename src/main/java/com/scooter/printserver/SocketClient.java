@@ -31,7 +31,7 @@ public class SocketClient {
         }
     }
 
- public String sendFile(File fileToSend) {
+ public void sendFile(File fileToSend) {
 
         String termination = "no";
 
@@ -43,13 +43,11 @@ public class SocketClient {
             out.write(fileByteArray, 0, fileByteArray.length);
             out.flush();
 
-            termination = in.readLine();
-
         } catch (IOException ioe) {
             log.warning(ioe.getMessage());
         }
 
-        return termination;
+
 
  }
 
