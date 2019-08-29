@@ -11,7 +11,7 @@ public class SocketClient {
 
     private Socket clientSocket;
     private OutputStream out;
-    private InputStream in;
+    private BufferedReader in;
 
     public SocketClient() {
         log.info("socketclient init");
@@ -22,7 +22,7 @@ public class SocketClient {
         try {
             clientSocket = new Socket(ip, port);
             out = clientSocket.getOutputStream();
-            in = clientSocket.getInputStream();
+            in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
 
         } catch (UnknownHostException ue) {
             log.severe(ue.getMessage());
@@ -31,7 +31,9 @@ public class SocketClient {
         }
     }
 
- public void sendFile(File fileToSend) {
+ public String sendFile(File fileToSend) {
+
+        String termination = "no";
 
         try {
             byte[] fileByteArray = new byte[(int) fileToSend.length()];
@@ -41,9 +43,13 @@ public class SocketClient {
             out.write(fileByteArray, 0, fileByteArray.length);
             out.flush();
 
+            termination = in.readLine();
+
         } catch (IOException ioe) {
             log.warning(ioe.getMessage());
         }
+
+        return termination;
 
  }
 

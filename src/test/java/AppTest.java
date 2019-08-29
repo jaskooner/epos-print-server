@@ -40,7 +40,9 @@ public class AppTest {
                 .getResource("com/scooter/printserver/receipt1.txt")
                 .getFile());
 
-        client1.sendFile(receipt1File);
+        String terminate = client1.sendFile(receipt1File);
+
+        assertEquals("200", terminate);
     }
 
 

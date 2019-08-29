@@ -39,7 +39,7 @@ public class SocketServer {
     private static class SocketClientHandler extends Thread {
 
         private Socket clientSocket;
-        private OutputStream out;
+        private PrintWriter out;
         private DataInputStream in;
 
         public SocketClientHandler(Socket socket) {
@@ -51,7 +51,7 @@ public class SocketServer {
             try {
 
                 in = new DataInputStream(clientSocket.getInputStream());
-                out = clientSocket.getOutputStream();
+                out = new PrintWriter(clientSocket.getOutputStream());
                 File tempFile = File.createTempFile("tempReceipt", null);
                 log.warning(tempFile.getAbsolutePath());
 
@@ -66,6 +66,8 @@ public class SocketServer {
                 log.warning(tempFile.getAbsolutePath());
                 PrintReceipt.printFile(tempFile);
                 tempFile.deleteOnExit();
+
+                out.println("200");
 
                 in.close();
                 out.close();
