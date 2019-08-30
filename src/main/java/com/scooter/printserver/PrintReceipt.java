@@ -1,5 +1,7 @@
 package com.scooter.printserver;
 
+import sun.java2d.pipe.SpanShapeRenderer;
+
 import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
@@ -10,24 +12,28 @@ import javax.print.attribute.standard.Sides;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class PrintReceipt {
 
     private static Logger logger = Logger.getLogger(PrintReceipt.class.getName());
 
-    static FileInputStream textStream;
+    private FileInputStream textStream;
 
-    public static void printFile(File fileToPrint) {
+    public  void printFile(File fileToPrint) {
+
+
 
         try {
             textStream = new FileInputStream(fileToPrint);
-        } catch (FileNotFoundException ffne) {
-            logger.warning(ffne.getMessage());
+        } catch (IOException ioe) {
+            logger.warning(ioe.getMessage());
         }
 
         // Set the document type
         DocFlavor myFormat = DocFlavor.INPUT_STREAM.TEXT_PLAIN_UTF_8;
+
 
         // Create a Doc
         Doc myDoc = new SimpleDoc(textStream, myFormat, null);
@@ -48,8 +54,9 @@ public class PrintReceipt {
             DocPrintJob job = services[0].createPrintJob();
             try {
                 job.print(myDoc, aset);
+
             } catch (PrintException pe) {
-                logger.warning(pe.getMessage());
+                logger.warning(pe.getLocalizedMessage());
             }
         }
     }

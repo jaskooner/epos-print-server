@@ -39,7 +39,7 @@ public class SocketServer {
     private static class SocketClientHandler extends Thread {
 
         private Socket clientSocket;
-        private PrintWriter out;
+        private DataOutputStream out;
         private DataInputStream in;
 
         public SocketClientHandler(Socket socket) {
@@ -51,22 +51,26 @@ public class SocketServer {
             try {
 
                 in = new DataInputStream(clientSocket.getInputStream());
-                out = new PrintWriter(clientSocket.getOutputStream(), true);
+                out = new DataOutputStream(clientSocket.getOutputStream());
                 File tempFile = File.createTempFile("tempReceipt", null);
-                log.warning(tempFile.getAbsolutePath());
 
-                FileOutputStream fos = new FileOutputStream(tempFile);
+                FileOutputStream fos = new FileOutputStream(tempFile, true);
 
-                int count = 0;
-                byte[] fileBuffer = new byte[4096];
+
+                int count = -1;
+                byte[] fileBuffer = new byte[Integer.parseInt(in.readUTF())];
                 while ((count = in.read(fileBuffer)) > 0 ) {
-                    fos.write(fileBuffer, 0, count);
+                    fos.write(fileBuffer,0, count);
+
                 }
+                fos.flush();
+                fos.close();
 
                 log.warning(tempFile.getAbsolutePath());
-                PrintReceipt.printFile(tempFile);
+                PrintReceipt pr = new PrintReceipt();
+                pr.printFile(tempFile);
                 tempFile.deleteOnExit();
-
+                
 
                 in.close();
                 out.close();

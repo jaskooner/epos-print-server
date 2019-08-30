@@ -10,8 +10,8 @@ public class SocketClient {
     private static Logger log = Logger.getLogger(SocketClient.class.getName());
 
     private Socket clientSocket;
-    private OutputStream out;
-    private BufferedReader in;
+    private DataOutputStream out;
+    private DataInputStream in;
 
     public SocketClient() {
         log.info("socketclient init");
@@ -21,8 +21,8 @@ public class SocketClient {
 
         try {
             clientSocket = new Socket(ip, port);
-            out = clientSocket.getOutputStream();
-            in = new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
+            out = new DataOutputStream(clientSocket.getOutputStream());
+            in = new DataInputStream(clientSocket.getInputStream());
 
         } catch (UnknownHostException ue) {
             log.severe(ue.getMessage());
@@ -33,15 +33,19 @@ public class SocketClient {
 
  public void sendFile(File fileToSend) {
 
-        String termination = "no";
+
 
         try {
             byte[] fileByteArray = new byte[(int) fileToSend.length()];
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileToSend));
             bis.read(fileByteArray, 0, fileByteArray.length);
+            bis.close();
 
+            out.writeUTF(Long.toString(fileToSend.length()));
             out.write(fileByteArray, 0, fileByteArray.length);
             out.flush();
+
+
 
         } catch (IOException ioe) {
             log.warning(ioe.getMessage());
@@ -53,8 +57,8 @@ public class SocketClient {
 
     public void stopConnection() {
         try {
-            in.close();
             out.close();
+            in.close();
             clientSocket.close();
         } catch (IOException ioe) {
             log.severe(ioe.getMessage());

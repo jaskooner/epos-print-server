@@ -22,32 +22,13 @@ public class AppTest {
     SocketClient client1;
     SocketClient client2;
 
-    @Before
-    public void setup() {
-        client1 = new SocketClient();
-        client1.startConnection("127.0.0.1", 6666);
-        client2 = new SocketClient();
-        client2.startConnection("127.0.0.1", 6666);
-    }
 
-    @After
-    public void tearDown() {
-        client1.stopConnection();
-    }
 
     @Test
     public void givenClient1_whenServerResponds_thenCorrect() {
 
-        // get files to send
-        File receipt1File = new File(AppTest.class.getClassLoader()
-                .getResource("com/scooter/printserver/receipt1.txt")
-                .getFile());
-
-        client1.sendFile(receipt1File);
-    }
-
-    @Test
-    public void given2Clients_whenServerResponds_thenCorrect() {
+        client1 = new SocketClient();
+        client1.startConnection("127.0.0.1", 6666);
 
         // get files to send
         File receipt1File = new File(AppTest.class.getClassLoader()
@@ -55,13 +36,34 @@ public class AppTest {
                 .getFile());
 
         client1.sendFile(receipt1File);
+        client1.stopConnection();
 
-        File receipt2File = new File(AppTest.class.getClassLoader()
-                .getResource("com/scooter/printserver/receipt2.txt")
-                .getFile());
-
-        client2.sendFile(receipt2File);
     }
+
+//    @Test
+//    public void given2Clients_whenServerResponds_thenCorrect() {
+//
+//        client1 = new SocketClient();
+//        client1.startConnection("127.0.0.1", 6666);
+//        client2 = new SocketClient();
+//        client2.startConnection("127.0.0.1", 6666);
+//
+//        // get files to send
+//        File receipt1File = new File(AppTest.class.getClassLoader()
+//                .getResource("com/scooter/printserver/receipt1.txt")
+//                .getFile());
+//
+//        client1.sendFile(receipt1File);
+//
+//        File receipt2File = new File(AppTest.class.getClassLoader()
+//                .getResource("com/scooter/printserver/receipt2.txt")
+//                .getFile());
+//
+//        client2.sendFile(receipt2File);
+//
+//        client1.stopConnection();
+//        client2.stopConnection();
+//    }
 
 
 }
