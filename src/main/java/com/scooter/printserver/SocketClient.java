@@ -21,6 +21,7 @@ public class SocketClient {
 
         try {
             clientSocket = new Socket(ip, port);
+            clientSocket.setSoTimeout(500);
             out = new DataOutputStream(clientSocket.getOutputStream());
             in = new DataInputStream(clientSocket.getInputStream());
 
@@ -31,9 +32,9 @@ public class SocketClient {
         }
     }
 
- public void sendFile(File fileToSend) {
+ public String sendFile(File fileToSend) {
 
-
+String response = "no";
 
         try {
             byte[] fileByteArray = new byte[(int) fileToSend.length()];
@@ -45,13 +46,14 @@ public class SocketClient {
             out.write(fileByteArray, 0, fileByteArray.length);
             out.flush();
 
+            response = in.readUTF();
 
 
         } catch (IOException ioe) {
             log.warning(ioe.getMessage());
         }
 
-
+        return response;
 
  }
 

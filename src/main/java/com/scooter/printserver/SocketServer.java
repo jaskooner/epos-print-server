@@ -70,7 +70,8 @@ public class SocketServer {
                 PrintReceipt pr = new PrintReceipt();
                 pr.printFile(tempFile);
                 tempFile.deleteOnExit();
-                
+
+                out.writeUTF("ok");
 
                 in.close();
                 out.close();

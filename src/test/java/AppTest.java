@@ -35,35 +35,15 @@ public class AppTest {
                 .getResource("com/scooter/printserver/receipt1.txt")
                 .getFile());
 
-        client1.sendFile(receipt1File);
+        String response = client1.sendFile(receipt1File);
         client1.stopConnection();
+
+
+        assertEquals("ok", response);
 
     }
 
-//    @Test
-//    public void given2Clients_whenServerResponds_thenCorrect() {
-//
-//        client1 = new SocketClient();
-//        client1.startConnection("127.0.0.1", 6666);
-//        client2 = new SocketClient();
-//        client2.startConnection("127.0.0.1", 6666);
-//
-//        // get files to send
-//        File receipt1File = new File(AppTest.class.getClassLoader()
-//                .getResource("com/scooter/printserver/receipt1.txt")
-//                .getFile());
-//
-//        client1.sendFile(receipt1File);
-//
-//        File receipt2File = new File(AppTest.class.getClassLoader()
-//                .getResource("com/scooter/printserver/receipt2.txt")
-//                .getFile());
-//
-//        client2.sendFile(receipt2File);
-//
-//        client1.stopConnection();
-//        client2.stopConnection();
-//    }
+
 
 
 }
